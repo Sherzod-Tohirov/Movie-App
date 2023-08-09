@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" type="text/css" href="./css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="./css/main.css"> -->
+    <link rel="stylesheet" type="text/css" href="./css/main.min.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="wrapper">
+        <h1 class="title" title="movie app"> Movie App </h1>
+        <div class="input-wrapper">
+          <form class="site-form js-form" autocomplete="off">
+            <span class="site-form__text">Search with name:</span>
+            <input class="site-form__input js-input-search" type="search" aria-label="search here" placeholder="Real time search here with name...">
+            <span class="site-form__text">Search with year:</span>
+            <div class="site-form__input-wrapper">
+              <input class="site-form__input-year js-start-year-input" type="number" aria-label="from year" placeholder="From year" min="1900">
+              <input class="site-form__input-year js-end-year-input" type="number" aria-label="to year" placeholder="To year..." min="1900">
+            </div>
+            <div class="site-form__btn-wrapper">
+              <button class="site-form__btn site-form__btn--refresh js-refresh-btn" type="button">Refresh page</button>
+              <button class="site-form__btn site-form__btn--submit" type="submit">Search</button>
+            </div>
+          </form>
+        </div>
+        <div class="movie-wrapper">
+          <h2 class="visually-hidden">Movie App</h2>
+          <ul class="movie-wrapper__list list js-list"></ul>
+        </div>
+      </div>
+    </div>
+    <script src="./js/movies.js"></script>
+    <script src="./js/main.js"></script>
+  </body>
+</html>
