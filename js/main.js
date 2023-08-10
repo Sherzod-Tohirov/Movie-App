@@ -4,11 +4,17 @@ const elInpSearch = document.querySelector('.js-input-search');
 const elInpStartYear = document.querySelector('.js-start-year-input');
 const elInpEndYear = document.querySelector('.js-end-year-input');
 const elRefreshBtn = document.querySelector('.js-refresh-btn');
-renderMovie(movies);
+let copy_movies = movies;
+renderMovie(copy_movies);
 
 elInpSearch.addEventListener('keyup', (evt) => {
-    let arr = movies.filter((item) => { return item.Title.toLowerCase().startsWith(`${elInpSearch.value.toLowerCase()}`); });
-    renderMovie(arr);
+     let arr = copy_movies.filter((item) => { return item.Title.toLowerCase().startsWith(`${elInpSearch.value.toLowerCase()}`); });
+    if(arr.length > 0) {
+       renderMovie(arr);
+    }else {
+       elList.innerHTML = ''; 
+       elList.innerHTML = '<p class="no-data-desc">No movie available with this name !</p>'; 
+    }
 });
 
 elRefreshBtn.addEventListener('click', (evt) => {
@@ -22,6 +28,11 @@ elForm.addEventListener('submit', (evt) => {
    if(elInpStartYear.value.length == 0 && elInpEndYear.value.length == 0) {
        elInpStartYear.classList.add('error');
        elInpEndYear.classList.add('error');
+       setInterval(() => {
+           elInpStartYear.classList.remove('error');
+           elInpEndYear.classList.remove('error');
+       }, 3000);
+       clearInterval();
        return;
    }else {
        elInpStartYear.classList.remove('error');
@@ -32,14 +43,21 @@ elForm.addEventListener('submit', (evt) => {
      arr = movies.filter((item) => {
         return item.movie_year <= elInpEndYear.value;
        });
+     copy_movies = arr;
    }else if(elInpEndYear.value.length == 0 && elInpStartYear.value.length > 0) {
      arr = movies.filter((item) => {
         return item.movie_year >= elInpStartYear.value;
      });
+     copy_movies = arr;
    }else {
     if(elInpStartYear.value > elInpEndYear.value) {
         elInpStartYear.classList.add('error');
         elInpEndYear.classList.add('error');
+        setInterval(() => {
+           elInpStartYear.classList.remove('error');
+           elInpEndYear.classList.remove('error');
+        }, 5000);
+       clearInterval();
         return;
     } 
 
@@ -109,7 +127,7 @@ function renderMovie(arr) {
                    Length
                </strong>
                <span class="details__desc" title="${length_hour}:${length_minutes}">
-                    ${length_hour}:${length_minutes} 
+                    ${length_hour != 0 && length_minutes != 0 ? length_hour + ':' + length_minutes : 'N/A'}  
                </span>
             </div>
             <div class="details__wrapper">
@@ -133,14 +151,14 @@ function renderMovie(arr) {
                    Category
                </strong>
                <span class="details__desc" title="${item.Categories}">
-                   ${item.Categories.indexOf('|') ? item.Categories.slice(0, item.Categories.indexOf('|')) : item.Categories }
+                   ${item.Categories.indexOf('|') ? item.Categories.slice(0, item.Categories.indexOf('|')) : item.Categories}
                </span>
             </div>
           </div>
           <div class="list__summary-wrapper">
             <h4 class="list__summary-title" title="Summary">Summary: </h4>
             <p class="list__summary-desc" title="${item.summary}">
-               ${summary != '' ? summary +  '...' : "There is no summary for this movie"}
+               ${summary != '' ? summary +  `...`  : "There is no summary for this movie"}
             </p>
           </div>
       </div>
